@@ -5,19 +5,23 @@ import ShopifySection from "@/components/ShopifySection"
 import ShopifyPage from "@/components/ShopifyPage"
 import ForeverCustomers from "@/components/ForeverCustomers"
 import Popup from "@/components/Popup"        // <-- ADD THIS
+import WikipediaHeroSection from '@/components/WikipediaHeroSection';
+import OurServicesSection from '@/components/OurServicesSection';
 
 export default function Home() {
   return (
     <div className="flex flex-col relative">
 
       {/* Popup shows after 4 seconds */}
-      <Popup />
+      {/* <Popup /> */}
 
       <Hero />
       <ShopifySection />
       <ShopifyPage />
       <ForeverCustomers />
-      <GlobeSection />
+      <WikipediaHeroSection />
+      <OurServicesSection />
+      {/* <GlobeSection /> */}
     </div>
   )
 }
