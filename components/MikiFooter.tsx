@@ -1,11 +1,10 @@
-// components/Footer.tsx
+// components/MikiFooter.tsx
 "use client"
 
 import { useState } from "react"
 import { 
   Phone, 
   Mail, 
-  MapPin, 
   Globe, 
   Shield, 
   FileText, 
@@ -64,7 +63,7 @@ const achievements = [
   { value: "100%", label: "Satisfaction Guarantee", icon: Users, color: "text-[#1E3AFF]" }
 ]
 
-export function Footer() {
+export function MikiFooter() {
   const [email, setEmail] = useState("")
   const [isSubscribed, setIsSubscribed] = useState(false)
 
@@ -78,21 +77,117 @@ export function Footer() {
     }
   }
 
+  // World map SVG as base64 to avoid parsing issues
+  const worldMapSVG = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 600'%3E%3Cdefs%3E%3Cstyle%3E.land%7Bfill:%230A1414;stroke:%23008060;stroke-width:0.5;opacity:0.8%7D.water%7Bfill:%230A1414;opacity:0.1%7D.dot%7Bfill:%23008060;opacity:0.6%7D%3C/style%3E%3C/defs%3E%3Crect width='1200' height='600' fill='%230A1414'/%3E%3Cpath class='water' d='M0 0h1200v600H0z'/%3E%3Cpath class='land' d='M200 150q50-30 100 0 50 30 100 0 50-30 100 0 50 30 100 0v300q-50 30-100 0-50-30-100 0-50 30-100 0-50-30-100 0z'/%3E%3Cpath class='land' d='M400 100q40-20 80 0 40 20 80 0v400q-40 20-80 0-40-20-80 0z'/%3E%3Cpath class='land' d='M600 200q30-15 60 0 30 15 60 0v200q-30 15-60 0-30-15-60 0z'/%3E%3Ccircle class='dot' cx='300' cy='200' r='8'/%3E%3Ccircle class='dot' cx='500' cy='300' r='6'/%3E%3Ccircle class='dot' cx='700' cy='250' r='5'/%3E%3Ccircle class='dot' cx='900' cy='350' r='7'/%3E%3Ccircle class='dot' cx='400' cy='400' r='6'/%3E%3Ccircle class='dot' cx='800' cy='150' r='5'/%3E%3Ctext x='600' y='100' text-anchor='middle' fill='%2300A37F' font-size='24' font-family='Arial' opacity='0.3'%3EGLOBAL%20REACH%3C/text%3E%3Ctext x='600' y='130' text-anchor='middle' fill='%2395BF47' font-size='18' font-family='Arial' opacity='0.3'%3EServing%20Clients%20Worldwide%3C/text%3E%3C/svg%3E`
+
   return (
     <footer className="relative bg-[#0A1414] overflow-hidden">
-      {/* World Map Background */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 800 400%22%3E%3Cpath d=%22M400,200 Q450,150 500,200 T600,200%22 stroke=%22%23008060%22 fill=%22none%22 stroke-width=%222%22/%3E%3Cpath d=%22M200,300 Q250,250 300,300 T400,300%22 stroke=%22%2300A37F%22 fill=%22none%22 stroke-width=%222%22/%3E%3Ccircle cx=%22500%22 cy=%22150%22 r=%228%22 fill=%22%2395BF47%22/%3E%3Ccircle cx=%22300%22 cy=%22250%22 r=%226%22 fill=%22%231E3AFF%22/%3E%3Ccircle cx=%22150%22 cy=%22100%22 r=%225%22 fill=%22%236FD1A6%22/%3E%3Ccircle cx=%22600%22 cy=%22300%22 r=%227%22 fill=%22%23FF1E2D%22/%3E%3C/svg%3E')] bg-center bg-no-repeat bg-contain" />
+      {/* World Map Background - Fixed */}
+      <div className="absolute inset-0 opacity-[0.03]">
+        <div 
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `url("${worldMapSVG}")`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
       </div>
 
       {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-[#0A1414] via-transparent to-transparent" />
 
       <div className="relative z-10">
-     
+        {/* Contact Section */}
+        <div className="border-t border-b border-[#1E1E1E] py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-black mb-6">
+                <span className="bg-gradient-to-r from-[#008060] via-[#00A37F] to-[#95BF47] bg-clip-text text-transparent">
+                  CONTACT
+                </span>
+              </h1>
+              <div className="space-y-4 max-w-md mx-auto">
+                <div className="flex items-center justify-center gap-4 text-2xl font-bold text-white">
+                  <Phone className="h-6 w-6 text-[#008060]" />
+                  <span>+44 30 7011 9969</span>
+                </div>
+                <div className="flex items-center justify-center gap-4 text-2xl font-bold text-white">
+                  <Mail className="h-6 w-6 text-[#00A37F]" />
+                  <span>sales@whitewest.co.uk</span>
+                </div>
+              </div>
+            </div>
 
-        {/* Mission Statement */}
-      
+            <div className="h-px bg-gradient-to-r from-transparent via-[#008060] to-transparent my-12" />
+
+            {/* Mission Statement */}
+            <div className="text-center max-w-3xl mx-auto">
+              <p className="text-xl text-white mb-8 leading-relaxed">
+                <span className="font-bold text-[#00A37F]">Miki Excel</span>: An iconic service provider for Wikipedia recognition. 
+                We are determined to provide 100% satisfaction to the customers.
+              </p>
+              
+              {/* Achievements */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                {achievements.map((achievement, index) => {
+                  const Icon = achievement.icon
+                  return (
+                    <div
+                      key={achievement.label}
+                      className="bg-[#0A1414]/80 backdrop-blur-sm border border-[#1E1E1E] rounded-xl p-6 text-center hover:border-[#008060]/50 transition-all duration-300 hover:scale-105"
+                    >
+                      <div className={`text-3xl font-black ${achievement.color} mb-2`}>{achievement.value}</div>
+                      <div className="flex items-center justify-center gap-2">
+                        <Icon className={`h-4 w-4 ${achievement.color}`} />
+                        <div className="text-sm text-[#6B6B6B]">{achievement.label}</div>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+
+            {/* Newsletter Subscription */}
+            <div className="bg-gradient-to-r from-[#008060]/10 via-[#0A1414] to-[#00A37F]/10 rounded-2xl border border-[#1E1E1E] p-8 max-w-2xl mx-auto">
+              <div className="text-center">
+                <h3 className="text-2xl font-bold text-white mb-4">Stay Updated</h3>
+                <p className="text-[#6B6B6B] mb-6">
+                  Subscribe for Wikipedia tips and exclusive offers
+                </p>
+                
+                <form onSubmit={handleSubscribe} className="flex gap-3">
+                  <div className="flex-1 relative">
+                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#6B6B6B]" />
+                    <Input
+                      type="email"
+                      placeholder="Enter your email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="pl-12 pr-4 py-6 bg-[#0A1414] border-2 border-[#1E1E1E] rounded-xl text-white placeholder:text-[#6B6B6B] focus:border-[#008060] focus:ring-2 focus:ring-[#008060]/20 transition-all"
+                      required
+                    />
+                  </div>
+                  <Button
+                    type="submit"
+                    className="bg-gradient-to-r from-[#008060] to-[#00A37F] text-white hover:from-[#00A37F] hover:to-[#008060] transition-all duration-300 px-8"
+                  >
+                    {isSubscribed ? "Subscribed!" : "Subscribe"}
+                    {!isSubscribed && <Send className="ml-2 h-4 w-4" />}
+                  </Button>
+                </form>
+                
+                {isSubscribed && (
+                  <div className="mt-4 text-[#00A37F] animate-fade-in">
+                    <CheckCircle2 className="h-5 w-5 inline mr-2" />
+                    Thank you for subscribing!
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* Main Footer Content */}
         <div className="py-12">
@@ -194,24 +289,6 @@ export function Footer() {
               </div>
             </div>
 
-            {/* Legal Links */}
-            <div className="flex flex-wrap gap-6 justify-center mb-8">
-              {footerLinks.legal.map((link, index) => {
-                const icons = [Shield, FileText, Newspaper]
-                const Icon = icons[index] || Shield
-                return (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    className="flex items-center gap-2 text-[#6B6B6B] hover:text-white transition-colors group"
-                  >
-                    <Icon className="h-4 w-4 group-hover:text-[#008060] transition-colors" />
-                    {link.name}
-                  </Link>
-                )
-              })}
-            </div>
-
             {/* Copyright Section */}
             <div className="border-t border-[#1E1E1E] pt-8">
               <div className="flex flex-col md:flex-row justify-between items-center gap-4">
@@ -220,14 +297,24 @@ export function Footer() {
                   <span>Foreword by <span className="text-white font-bold">Miki Excel 2024</span>. All rights reserved Will Excel</span>
                 </div>
                 
-                <div className="flex items-center gap-4">
+                <div className="flex flex-wrap items-center justify-center gap-4">
+                  <Link
+                    href="/privacy-policy"
+                    className="text-sm text-[#6B6B6B] hover:text-white transition-colors"
+                  >
+                    Privacy Policy
+                  </Link>
+                  <div className="w-1 h-1 bg-[#6B6B6B] rounded-full" />
+                  <Link
+                    href="/terms"
+                    className="text-sm text-[#6B6B6B] hover:text-white transition-colors"
+                  >
+                    Terms Of Use
+                  </Link>
+                  <div className="w-1 h-1 bg-[#6B6B6B] rounded-full" />
                   <span className="text-sm text-[#FF1E2D] flex items-center gap-2">
                     <Shield className="h-4 w-4" />
-                    WARNING: Wikipedia compliance is crucial
-                  </span>
-                  <div className="w-1 h-1 bg-[#6B6B6B] rounded-full" />
-                  <span className="text-sm text-[#6B6B6B]">
-                    Official Wikipedia Editor ID: WE2024
+                    WARNING News
                   </span>
                 </div>
               </div>

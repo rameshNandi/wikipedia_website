@@ -13,7 +13,7 @@ import WikiServices from "@/components/WikiServices";
 import { WikipediaProcess } from "@/components/WikipediaProcess"
 import { TestimonialsSection } from "@/components/TestimonialsSection"
 import { FaqSection } from "@/components/FaqSection"
-
+import { MikiFooter } from "@/components/MikiFooter"
 
 export default function Home() {
   return (
@@ -33,7 +33,7 @@ export default function Home() {
       <WikipediaProcess />
       <TestimonialsSection />
       <FaqSection />
-    
+    <MikiFooter />
     </div>
   )
 }
