@@ -1,156 +1,89 @@
-"use client";
+'use client';
 import { useState, useEffect } from 'react';
-import Image from "next/image";
 
 export default function WikipediaPage() {
-  const [images, setImages] = useState({
-    hero: '',
-    posDevice: '',
-    publishChannels: '',
-    checkoutCard: ''
-  });
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  // Fetch images from Pexels API
-  useEffect(() => {
-    const fetchImages = async () => {
-      try {
-        setLoading(true);
-        const API_KEY = 'YOUR_PEXELS_API_KEY'; // Replace with your Pexels API key
-        
-        const queries = {
-          hero: 'wikipedia website interface',
-          posDevice: 'people reading encyclopedia on tablet',
-          publishChannels: 'online knowledge platforms',
-          checkoutCard: 'encyclopedia book stack'
-        };
-
-        const fetchPromises = Object.entries(queries).map(async ([key, query]) => {
-          try {
-            const response = await fetch(
-              `https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=1&orientation=landscape`,
-              { headers: { Authorization: API_KEY } }
-            );
-
-            if (response.ok) {
-              const data = await response.json();
-              return { key, url: data.photos[0]?.src.large || '' };
-            }
-            return { key, url: '' };
-          } catch (error) {
-            console.error(`Error fetching ${key} image:`, error);
-            return { key, url: '' };
-          }
-        });
-
-        const results = await Promise.all(fetchPromises);
-        const newImages = {};
-        results.forEach(result => {
-          newImages[result.key] = result.url;
-        });
-
-        setImages({
-          hero: newImages.hero || 'https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=1600',
-          posDevice: newImages.posDevice || 'https://images.pexels.com/photos/439227/pexels-photo-439227.jpeg?auto=compress&cs=tinysrgb&w=800',
-          publishChannels: newImages.publishChannels || 'https://images.pexels.com/photos/267371/pexels-photo-267371.jpeg?auto=compress&cs=tinysrgb&w=800',
-          checkoutCard: newImages.checkoutCard || 'https://images.pexels.com/photos/4386431/pexels-photo-4386431.jpeg?auto=compress&cs=tinysrgb&w=800'
-        });
-
-      } catch (error) {
-        console.error('Error fetching images:', error);
-        // Fallback images
-        setImages({
-          hero: 'https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=1600',
-          posDevice: 'https://images.pexels.com/photos/439227/pexels-photo-439227.jpeg?auto=compress&cs=tinysrgb&w=800',
-          publishChannels: 'https://images.pexels.com/photos/267371/pexels-photo-267371.jpeg?auto=compress&cs=tinysrgb&w=800',
-          checkoutCard: 'https://images.pexels.com/photos/4386431/pexels-photo-4386431.jpeg?auto=compress&cs=tinysrgb&w=800'
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchImages();
-  }, []);
-
-  // Card background gradient style
-  const cardGradientStyle = {
-    background: 'linear-gradient(135deg, #0E2A2A 0%, #0C2323 45%, #0A1C1C 100%)'
+  // Predefined images without API calls for faster loading
+  const images = {
+    hero: "https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    posDevice: "https://images.pexels.com/photos/439227/pexels-photo-439227.jpeg?auto=compress&cs=tinysrgb&w=800",
+    publishChannels: "https://images.pexels.com/photos/267371/pexels-photo-267371.jpeg?auto=compress&cs=tinysrgb&w=800",
+    checkoutCard: "https://images.pexels.com/photos/4386431/pexels-photo-4386431.jpeg?auto=compress&cs=tinysrgb&w=800"
   };
 
+  useEffect(() => {
+    // Simulate loading for better UX
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 300);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-[#0A1414] text-white px-6 md:px-20 py-16">
+    <div className="min-h-screen bg-[#0A1414] text-white py-12 md:py-20 px-4 md:px-6">
 
       {/* ===== HEADER ===== */}
-      <div className="max-w-5xl mx-auto mb-14">
-        <p className="text-sm text-[#22D3EE] mb-3">Online and in person</p>
+      <div className="max-w-6xl mx-auto mb-12 md:mb-16">
+        <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#95BF47] to-[#00A37F] text-[#0A1414] px-4 py-1.5 rounded-full mb-4">
+          <span className="w-1.5 h-1.5 bg-[#0A1414] rounded-full" />
+          <span className="text-xs font-bold uppercase tracking-wider">Wikipedia Access</span>
+          <span className="w-1.5 h-1.5 bg-[#0A1414] rounded-full" />
+        </div>
 
-        <h1 className="text-4xl md:text-5xl font-semibold leading-tight mb-4">
-          Explore knowledge everywhere
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+          Explore <span className="text-[#95BF47]">Knowledge</span> Everywhere
         </h1>
 
-        <p className="text-gray-400 text-base md:text-lg max-w-3xl">
-          Get access to{" "}
-          <span className="underline underline-offset-4">
-            comprehensive articles
-          </span>{" "}
-          that are curated collaboratively. Read, learn, and contribute freely to
-          the world's largest encyclopedia.
+        <p className="text-lg md:text-xl text-[#F5F5F7] max-w-3xl">
+          Get access to comprehensive articles that are curated collaboratively. 
+          Read, learn, and contribute freely to the world's largest encyclopedia.
         </p>
       </div>
 
       {/* ===== HERO IMAGE ===== */}
-      <div className="max-w-7xl mx-auto mb-20">
-        <div className="bg-[#0F1C1C] rounded-2xl p-4 md:p-6">
-          <div className="relative overflow-hidden rounded-xl h-[400px] md:h-[500px]">
-            {loading ? (
-              <div className="w-full h-full bg-gray-800 animate-pulse rounded-xl"></div>
-            ) : (
-              <Image
-                src={images.hero}
-                alt="Wikipedia website interface showcasing articles and navigation"
-                fill
-                className="w-full h-full object-cover"
-                priority
-                sizes="(max-width: 768px) 100vw, 1200px"
-              />
-            )}
-          </div>
+      <div className="max-w-7xl mx-auto mb-16 md:mb-24">
+        <div className="overflow-hidden rounded-xl md:rounded-2xl">
+          {loading ? (
+            <div className="w-full h-64 md:h-80 lg:h-96 bg-[#121212] animate-pulse rounded-xl"></div>
+          ) : (
+            <img
+              src={images.hero}
+              alt="Wikipedia website interface showcasing articles and navigation"
+              className="w-full h-64 md:h-80 lg:h-96 object-cover"
+              loading="eager"
+            />
+          )}
         </div>
       </div>
 
-      {/* ===== WIKIPEDIA STYLE CARDS ===== */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+      {/* ===== WIKIPEDIA FEATURE CARDS ===== */}
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
 
         {/* CARD 1: Reading articles */}
-        <div 
-          className="rounded-2xl p-6 md:p-8 min-h-[480px] md:min-h-[520px] flex flex-col justify-between transition-all duration-300 hover:scale-[1.02]"
-          style={cardGradientStyle}
-        >
-          <div className="flex justify-center items-center h-[280px] md:h-[320px]">
+        <div className="bg-[#121212] rounded-xl md:rounded-2xl p-6 hover:transform hover:-translate-y-1 transition-all duration-300">
+          <div className="mb-6 overflow-hidden rounded-lg">
             {loading ? (
-              <div className="w-full h-full bg-gray-800/50 animate-pulse rounded-xl"></div>
+              <div className="w-full h-48 bg-[#95BF47]/10 animate-pulse rounded-lg"></div>
             ) : (
-              <div className="relative w-full h-full">
-                <Image
-                  src={images.posDevice}
-                  alt="People reading encyclopedia articles on a tablet or device"
-                  fill
-                  className="object-contain drop-shadow-2xl"
-                  sizes="(max-width: 768px) 100vw, 400px"
-                />
-              </div>
+              <img
+                src={images.posDevice}
+                alt="People reading encyclopedia articles on a tablet or device"
+                className="w-full h-48 object-cover"
+                loading="lazy"
+              />
             )}
           </div>
 
-          <div className="mt-6">
-            <h3 className="text-xl font-semibold mb-3 text-white">
-              Access articles anywhere
+          <div>
+            <h3 className="text-xl font-bold mb-3 text-white">
+              Access Articles Anywhere
             </h3>
-            <p className="text-gray-300 text-sm leading-relaxed">
+            <p className="text-sm text-[#F5F5F7] leading-relaxed">
               Read detailed articles on various topics and keep your knowledge
               up-to-date across devices with{" "}
-              <span className="text-[#22D3EE] underline underline-offset-4">
+              <span className="text-[#95BF47] font-semibold">
                 Wikipedia
               </span>
               .
@@ -159,34 +92,28 @@ export default function WikipediaPage() {
         </div>
 
         {/* CARD 2: Multichannel contributions */}
-        <div 
-          className="rounded-2xl p-6 md:p-8 min-h-[480px] md:min-h-[520px] flex flex-col justify-between transition-all duration-300 hover:scale-[1.02]"
-          style={cardGradientStyle}
-        >
-          <div className="flex justify-center items-center h-[280px] md:h-[320px]">
+        <div className="bg-[#121212] rounded-xl md:rounded-2xl p-6 hover:transform hover:-translate-y-1 transition-all duration-300">
+          <div className="mb-6 overflow-hidden rounded-lg">
             {loading ? (
-              <div className="w-full h-full bg-gray-800/50 animate-pulse rounded-xl"></div>
+              <div className="w-full h-48 bg-[#00A37F]/10 animate-pulse rounded-lg"></div>
             ) : (
-              <div className="relative w-full h-full">
-                <Image
-                  src={images.publishChannels}
-                  alt="Online knowledge platforms for publishing and contributing content"
-                  fill
-                  className="object-contain drop-shadow-2xl"
-                  sizes="(max-width: 768px) 100vw, 400px"
-                />
-              </div>
+              <img
+                src={images.publishChannels}
+                alt="Online knowledge platforms for publishing and contributing content"
+                className="w-full h-48 object-cover"
+                loading="lazy"
+              />
             )}
           </div>
 
-          <div className="mt-6">
-            <h3 className="text-xl font-semibold mb-3 text-white">
-              Contribute and share knowledge
+          <div>
+            <h3 className="text-xl font-bold mb-3 text-white">
+              Contribute and Share Knowledge
             </h3>
-            <p className="text-gray-300 text-sm leading-relaxed">
+            <p className="text-sm text-[#F5F5F7] leading-relaxed">
               Share information and edits that help millions learn and
               discover across the web with{" "}
-              <span className="text-[#22D3EE] underline underline-offset-4">
+              <span className="text-[#00A37F] font-semibold">
                 multichannel contributions
               </span>
               .
@@ -195,31 +122,25 @@ export default function WikipediaPage() {
         </div>
 
         {/* CARD 3: Comprehensive reference */}
-        <div 
-          className="rounded-2xl p-6 md:p-8 min-h-[480px] md:min-h-[520px] flex flex-col justify-between transition-all duration-300 hover:scale-[1.02]"
-          style={cardGradientStyle}
-        >
-          <div className="flex justify-center items-center h-[280px] md:h-[320px]">
+        <div className="bg-[#121212] rounded-xl md:rounded-2xl p-6 hover:transform hover:-translate-y-1 transition-all duration-300">
+          <div className="mb-6 overflow-hidden rounded-lg">
             {loading ? (
-              <div className="w-full h-full bg-gray-800/50 animate-pulse rounded-xl"></div>
+              <div className="w-full h-48 bg-[#008060]/10 animate-pulse rounded-lg"></div>
             ) : (
-              <div className="relative w-full h-full">
-                <Image
-                  src={images.checkoutCard}
-                  alt="Encyclopedia book stack representing comprehensive reference content"
-                  fill
-                  className="object-contain drop-shadow-2xl"
-                  sizes="(max-width: 768px) 100vw, 400px"
-                />
-              </div>
+              <img
+                src={images.checkoutCard}
+                alt="Encyclopedia book stack representing comprehensive reference content"
+                className="w-full h-48 object-cover"
+                loading="lazy"
+              />
             )}
           </div>
 
-          <div className="mt-6">
-            <h3 className="text-xl font-semibold mb-3 text-white">
-              Comprehensive knowledge base
+          <div>
+            <h3 className="text-xl font-bold mb-3 text-white">
+              Comprehensive Knowledge Base
             </h3>
-            <p className="text-gray-300 text-sm leading-relaxed">
+            <p className="text-sm text-[#F5F5F7] leading-relaxed">
               Wikipedia provides thorough and well-referenced content,
               allowing users to learn about virtually any subject freely.
             </p>
@@ -228,14 +149,45 @@ export default function WikipediaPage() {
 
       </div>
 
-      {/* ===== FOOTER NOTE ===== */}
-      {loading && (
-        <div className="max-w-7xl mx-auto mt-10 text-center">
-          <p className="text-gray-400 text-sm">
-            Loading images from Pexels API...
-          </p>
+      {/* ===== STATS SECTION ===== */}
+      <div className="max-w-7xl mx-auto mt-16 md:mt-24">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+          <div className="bg-[#121212] p-4 rounded-xl text-center">
+            <div className="text-2xl md:text-3xl font-bold text-[#95BF47] mb-1">55M+</div>
+            <div className="text-xs md:text-sm text-[#F5F5F7]">Wikipedia Articles</div>
+          </div>
+          <div className="bg-[#121212] p-4 rounded-xl text-center">
+            <div className="text-2xl md:text-3xl font-bold text-[#00A37F] mb-1">1B+</div>
+            <div className="text-xs md:text-sm text-[#F5F5F7]">Monthly Visitors</div>
+          </div>
+          <div className="bg-[#121212] p-4 rounded-xl text-center">
+            <div className="text-2xl md:text-3xl font-bold text-[#008060] mb-1">300+</div>
+            <div className="text-xs md:text-sm text-[#F5F5F7]">Languages</div>
+          </div>
+          <div className="bg-[#121212] p-4 rounded-xl text-center">
+            <div className="text-2xl md:text-3xl font-bold text-[#1E3AFF] mb-1">24/7</div>
+            <div className="text-xs md:text-sm text-[#F5F5F7]">Available Access</div>
+          </div>
         </div>
-      )}
+      </div>
+
+      {/* ===== CTA SECTION ===== */}
+      <div className="max-w-3xl mx-auto mt-16 md:mt-24 text-center">
+        <h2 className="text-2xl md:text-3xl font-bold mb-4">
+          Start Your Wikipedia Journey Today
+        </h2>
+        
+        <p className="text-[#F5F5F7] mb-8">
+          Explore millions of articles and contribute to the world's knowledge
+        </p>
+        
+        <button className="bg-gradient-to-r from-[#95BF47] to-[#00A37F] text-[#0A1414] px-8 py-3 rounded-lg font-bold hover:opacity-90 transition-opacity inline-flex items-center gap-2">
+          <span>Explore Wikipedia</span>
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </button>
+      </div>
     </div>
   );
 }

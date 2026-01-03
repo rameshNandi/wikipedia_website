@@ -17,7 +17,7 @@ export default function ShopifySection() {
      "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=800",
      "https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=800",
     "https://images.pexels.com/photos/3184296/pexels-photo-3184296.jpeg?auto=compress&cs=tinysrgb&w=800",
-      "https://images.pexels.com/photos/3184306/pexels-photo-3184306.jpeg?auto=compress&cs=tinysrgb&w=800",,
+      "https://images.pexels.com/photos/3184306/pexels-photo-3184306.jpeg?auto=compress&cs=tinysrgb&w=800",
      "https://images.pexels.com/photos/3182796/pexels-photo-3182796.jpeg?auto=compress&cs=tinysrgb&w=800",
      "https://images.pexels.com/photos/3182773/pexels-photo-3182773.jpeg?auto=compress&cs=tinysrgb&w=800",
      "https://images.pexels.com/photos/3182804/pexels-photo-3182804.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -36,42 +36,11 @@ export default function ShopifySection() {
     const fetchImages = async () => {
       try {
         setLoading(true);
-        
-        // For better performance, we'll use fallback images initially
-        // and lazy load real images if needed
         setSliderImages(fallbackSliderImages);
         setStoryImages(fallbackStoryImages);
-        
-        // You can uncomment this and add your Pexels API key for real images
-        /*
-        const API_KEY = 'YOUR_PEXELS_API_KEY';
-        const sliderResponse = await fetch(
-          'https://api.pexels.com/v1/search?query=knowledge+library+people&per_page=13&orientation=landscape',
-          { headers: { Authorization: API_KEY } }
-        );
-
-        const storyResponse = await fetch(
-          'https://api.pexels.com/v1/search?query=community+collaboration+learning&per_page=3&orientation=landscape',
-          { headers: { Authorization: API_KEY } }
-        );
-
-        if (sliderResponse.ok && storyResponse.ok) {
-          const sliderData = await sliderResponse.json();
-          const storyData = await storyResponse.json();
-
-          const sliderPhotos = sliderData.photos.map(p => p.src.medium);
-          const storyPhotos = storyData.photos.map(p => p.src.medium);
-
-          setSliderImages(sliderPhotos.slice(0, 13));
-          setStoryImages(storyPhotos.slice(0, 3));
-        }
-        */
-        
       } catch (err) {
         console.error('Error loading images:', err);
-        // Keep fallback images on error
       } finally {
-        // Small delay for smooth loading animation
         setTimeout(() => {
           setLoading(false);
         }, 500);
@@ -80,7 +49,6 @@ export default function ShopifySection() {
 
     fetchImages();
 
-    // Cleanup
     return () => {
       setSliderImages([]);
       setStoryImages([]);
@@ -94,7 +62,7 @@ export default function ShopifySection() {
     const slider = sliderRef.current;
     let animationFrame: number;
     let position = 0;
-    const speed = 0.5; // pixels per frame
+    const speed = 0.5;
 
     const animate = () => {
       if (!isHovering) {
@@ -115,29 +83,15 @@ export default function ShopifySection() {
   }, [loading, isHovering]);
 
   return (
-    <section className="bg-gradient-to-b from-[#0A1414] to-[#121212] text-white py-12 md:py-24 relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0">
-        {/* Grid Pattern */}
-        <div className="absolute inset-0 opacity-[0.03]" style={{
-          backgroundImage: `linear-gradient(to right, #95BF47 1px, transparent 1px),
-                          linear-gradient(to bottom, #95BF47 1px, transparent 1px)`,
-          backgroundSize: '50px 50px'
-        }} />
-        
-        {/* Floating Glow Effects */}
-        <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-gradient-to-br from-[#008060]/10 to-[#00A37F]/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-gradient-to-br from-[#95BF47]/10 to-[#6FD1A6]/10 rounded-full blur-3xl" />
-      </div>
-
-      <div className="container mx-auto px-4 md:px-6 relative z-10">
+    <section className="bg-[#0A1414] text-white py-12 md:py-24">
+      <div className="container mx-auto px-4 md:px-6">
         
         {/* Header Section */}
         <div className="mb-12 md:mb-16 max-w-4xl">
           <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#95BF47] to-[#00A37F] text-[#0A1414] px-4 py-1.5 rounded-full mb-6">
-            <span className="w-1.5 h-1.5 bg-[#0A1414] rounded-full animate-pulse" />
+            <span className="w-1.5 h-1.5 bg-[#0A1414] rounded-full" />
             <span className="text-xs font-bold uppercase tracking-wider">Wikipedia Excellence</span>
-            <span className="w-1.5 h-1.5 bg-[#0A1414] rounded-full animate-pulse" />
+            <span className="w-1.5 h-1.5 bg-[#0A1414] rounded-full" />
           </div>
           
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
@@ -155,7 +109,7 @@ export default function ShopifySection() {
         <div className="mb-16 md:mb-24 relative">
           {/* Slider Container */}
           <div 
-            className="overflow-hidden rounded-2xl"
+            className="overflow-hidden"
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
           >
@@ -164,11 +118,10 @@ export default function ShopifySection() {
               className="flex gap-4 md:gap-6 transition-transform duration-1000 ease-linear"
               style={{ width: '300%' }}
             >
-              {/* First set of images */}
               {loading ? (
                 [...Array(13)].map((_, i) => (
                   <div key={i} className="flex-shrink-0 w-full md:w-1/3 lg:w-1/4">
-                    <div className="bg-gradient-to-br from-[#0A1414] to-[#121212] rounded-xl p-8 h-48 md:h-64 lg:h-72 flex items-center justify-center border border-[#95BF47]/10 animate-pulse">
+                    <div className="bg-[#121212] p-8 h-48 md:h-64 lg:h-72 flex items-center justify-center animate-pulse">
                       <div className="text-[#95BF47] opacity-30">Loading...</div>
                     </div>
                   </div>
@@ -177,7 +130,7 @@ export default function ShopifySection() {
                 <>
                   {[...sliderImages, ...sliderImages.slice(0, 4)].map((src, i) => (
                     <div key={i} className="flex-shrink-0 w-full md:w-1/3 lg:w-1/4">
-                      <div className="group relative overflow-hidden rounded-xl">
+                      <div className="group relative overflow-hidden">
                         {/* Image */}
                         <img
                           src={src}
@@ -189,14 +142,6 @@ export default function ShopifySection() {
                         
                         {/* Gradient Overlay */}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#0A1414]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        
-                        {/* Content Overlay */}
-                        <div className="absolute bottom-0 left-0 right-0 p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                          <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 bg-[#95BF47] rounded-full animate-pulse" />
-                            <span className="text-xs font-bold text-white uppercase">Service {((i % 13) + 1).toString().padStart(2, '0')}</span>
-                          </div>
-                        </div>
                       </div>
                     </div>
                   ))}
@@ -259,7 +204,7 @@ export default function ShopifySection() {
             {loading ? (
               [...Array(3)].map((_, i) => (
                 <div key={i} className="animate-pulse">
-                  <div className="bg-gradient-to-br from-[#0A1414] to-[#121212] rounded-xl p-6 border border-[#95BF47]/10">
+                  <div className="bg-[#121212] p-6">
                     <div className="h-48 md:h-56 bg-[#95BF47]/10 rounded-lg mb-4" />
                     <div className="h-4 bg-[#95BF47]/10 rounded mb-3 w-2/3" />
                     <div className="space-y-2">
@@ -307,12 +252,9 @@ export default function ShopifySection() {
               Join thousands of satisfied clients who have established their digital presence with our professional Wikipedia services.
             </p>
             
-            <button className="group relative bg-gradient-to-r from-[#95BF47] to-[#00A37F] text-[#0A1414] px-8 py-4 rounded-lg font-bold hover:shadow-lg hover:shadow-[#95BF47]/30 transition-all duration-300 flex items-center gap-3 overflow-hidden">
-              {/* Button Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
-              
-              <span className="relative">Explore Ways to Contribute</span>
-              <svg className="w-5 h-5 relative group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <button className="bg-gradient-to-r from-[#95BF47] to-[#00A37F] text-[#0A1414] px-8 py-4 rounded-lg font-bold hover:opacity-90 transition-opacity flex items-center gap-3">
+              <span>Explore Ways to Contribute</span>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </button>
@@ -320,66 +262,21 @@ export default function ShopifySection() {
             {/* Trust Badges */}
             <div className="flex flex-wrap items-center justify-center gap-6 mt-6">
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-[#FF1E2D] rounded-full animate-pulse" />
+                <div className="w-2 h-2 bg-[#FF1E2D] rounded-full" />
                 <span className="text-xs text-[#F5F5F7]">Verified Wikipedia Editors</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-[#1E3AFF] rounded-full animate-pulse" />
+                <div className="w-2 h-2 bg-[#1E3AFF] rounded-full" />
                 <span className="text-xs text-[#F5F5F7]">Money Back Guarantee</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-[#95BF47] rounded-full animate-pulse" />
+                <div className="w-2 h-2 bg-[#95BF47] rounded-full" />
                 <span className="text-xs text-[#F5F5F7]">24/7 Customer Support</span>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        .fade-in-up {
-          animation: fadeInUp 0.6s ease-out forwards;
-        }
-        
-        .optimized-image {
-          will-change: transform;
-          backface-visibility: hidden;
-          -webkit-font-smoothing: antialiased;
-        }
-        
-        .slider-item {
-          flex: 0 0 calc(100% / 4);
-        }
-        
-        @media (max-width: 1024px) {
-          .slider-item {
-            flex: 0 0 calc(100% / 3);
-          }
-        }
-        
-        @media (max-width: 768px) {
-          .slider-item {
-            flex: 0 0 calc(100% / 2);
-          }
-        }
-        
-        @media (max-width: 640px) {
-          .slider-item {
-            flex: 0 0 100%;
-          }
-        }
-      `}</style>
     </section>
   );
 }
@@ -399,41 +296,21 @@ function StoryCard({
   icon: string;
 }) {
   return (
-    <div className="group relative bg-gradient-to-br from-[#0A1414] to-[#121212] rounded-xl p-6 border border-[#95BF47]/10 hover:border-[#95BF47]/30 transition-all duration-300 hover:-translate-y-2">
-      {/* Corner Accents */}
-      <div 
-        className="absolute top-0 left-0 w-4 h-4 border-t border-l border-[#95BF47]/30 rounded-tl-xl"
-      />
-      <div 
-        className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-[#95BF47]/30 rounded-br-xl"
-      />
-      
+    <div className="group">
       {/* Image Container */}
       <div className="relative mb-4 overflow-hidden rounded-lg">
         <img
           src={image}
-          className="w-full h-48 md:h-56 object-cover transition-transform duration-500 group-hover:scale-105 optimized-image"
+          className="w-full h-48 md:h-56 object-cover transition-transform duration-500 group-hover:scale-105"
           alt={title}
           loading="lazy"
           decoding="async"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A1414]/60 via-transparent to-transparent" />
-        
-        {/* Icon Badge */}
-        <div 
-          className="absolute top-4 right-4 w-10 h-10 rounded-lg flex items-center justify-center text-lg"
-          style={{ 
-            backgroundColor: `${color}20`,
-            border: `2px solid ${color}40`
-          }}
-        >
-          {icon}
-        </div>
       </div>
       
       {/* Content */}
       <h4 
-        className="text-lg font-bold mb-2 group-hover:tracking-wide transition-all duration-300"
+        className="text-lg font-bold mb-2"
         style={{ color }}
       >
         {title}
@@ -442,33 +319,6 @@ function StoryCard({
       <p className="text-sm text-[#F5F5F7] leading-relaxed">
         {description}
       </p>
-      
-      {/* Learn More Link */}
-      <div className="mt-4 flex items-center gap-2 text-sm font-semibold cursor-pointer group/link">
-        <span 
-          className="transition-all duration-300 group-hover/link:underline group-hover/link:tracking-wider"
-          style={{ color }}
-        >
-          Learn More
-        </span>
-        <div 
-          className="w-4 h-4 flex items-center justify-center rounded-full transition-all duration-300 group-hover/link:translate-x-1"
-          style={{ 
-            backgroundColor: `${color}20`,
-            border: `1px solid ${color}40`
-          }}
-        >
-          <svg 
-            className="w-2 h-2" 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-            style={{ color }}
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-          </svg>
-        </div>
-      </div>
     </div>
   );
 }

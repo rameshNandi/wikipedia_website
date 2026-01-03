@@ -23,9 +23,6 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}>
         <Navbar />
         <main>{children}</main>
-        <footer className="border-t border-border py-12 px-6 text-center text-muted-foreground">
-          <p>© 2026 DevPlatform. All rights reserved.</p>
-        </footer>
       </body>
     </html>
   )
