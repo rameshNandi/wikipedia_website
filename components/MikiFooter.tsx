@@ -202,9 +202,9 @@ export function MikiFooter() {
                     </div>
                     <div>
                       <div className="font-black text-2xl tracking-tighter text-white">
-                        MIKI<span className="text-[#00A37F]">EXCEL</span>
+                        Wiki<span className="text-[#00A37F]">Crop</span>
                       </div>
-                      <div className="text-xs text-[#6B6B6B]">Wikipedia Experts Since 2024</div>
+                      <div className="text-xs text-[#6B6B6B]">Global Solutions</div>
                     </div>
                   </div>
                 </Link>
