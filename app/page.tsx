@@ -13,7 +13,7 @@ import WikiServices from "@/components/WikiServices";
 import { WikipediaProcess } from "@/components/WikipediaProcess"
 import { TestimonialsSection } from "@/components/TestimonialsSection"
 import { FaqSection } from "@/components/FaqSection"
-" 
+
 
 export default function Home() {
   return (
